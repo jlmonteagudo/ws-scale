@@ -1,0 +1,15 @@
+{
+  "name": "ws-scale",
+  "version": "1.0.1",
+  "description": "ws scale",
+  "main": "app.js",
+  "scripts": {
+    "start": "nodemon app.js"
+  },
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "redis": "^4.1.0",
+    "ws": "^8.7.0"
+  }
+}

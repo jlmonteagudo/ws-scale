@@ -1,0 +1,48 @@
+version: "3.3"
+services:
+  redis_db:
+    image: "redis"
+    expose:
+      - 6379
+    ports:
+      - "6379:6379"
+
+  app1:
+    build:
+      context: .
+    volumes:
+      - .:/app
+      - /app/node_modules
+    environment:
+      WS_PORT: 9091
+
+    depends_on:
+      - redis_db
+
+    ports:
+      - "9091:9091"
+
+  app2:
+    build:
+      context: .
+    volumes:
+      - .:/app
+      - /app/node_modules
+    environment:
+      WS_PORT: 9092
+
+    depends_on:
+      - redis_db
+
+    ports:
+      - "9092:9092"
+
+  haproxy:
+    image: haproxy
+    depends_on:
+      - app1
+      - app2
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./haproxy:/usr/local/etc/haproxy
